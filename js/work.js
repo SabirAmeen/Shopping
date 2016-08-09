@@ -1,28 +1,28 @@
-var fp=[];
-var found=[];
+var fp;
+var arr=[];
 var output="";
 function chk()
 {
 	_.each(shop,function(num){
-		 found=_.filter(pc,function(val){
+		 var found=_.filter(pc,function(val){
 			return (num.name===val.name && num.size===val.size);
 		})
-		if(!!found)
-		{	
-			_.each(found,function(val){
-				fp.push(val);
-				
-			})
-		}
-	})
-	var cb1=100;
-	_.each(fp,function(ele){
-		output+= '<input type="checkbox" id="'+ ele.id +
-		'">id:'+ele.id+'&nbsp;&nbsp;'+'name:'+ele.name+
-		'&nbsp;&nbsp;'+'color:'+ele.color+'&nbsp;&nbsp;'+'price:'+ele.price+
-		'</p>'
+		 arr=[].concat(arr,found)
 		
 	})
+	
+	grouped=_.groupBy(arr,"name");
+	console.log(fp);
+	var key, i, j;
+for (key in grouped) {
+	output+= '<h3>'+key+'</h3>';
+	for(i = 0, j = grouped[key].length; i< j; i++) {
+		output+= '<input type="checkbox" id="'+ grouped[key][i].id +
+		'">id:'+grouped[key][i].id+'&nbsp;&nbsp;'+'name:'+grouped[key][i].name+
+		'&nbsp;&nbsp;'+'color:'+grouped[key][i].color+'&nbsp;&nbsp;'+'price:'+grouped[key][i].price+
+		'</p>'
+	}	
+	}
 	$('body').empty();
 	$('body').append('<div id="checkboxes">'+output+'</div>');
 	$('body').append('<button onclick="checkout();">Checkout</button>');
